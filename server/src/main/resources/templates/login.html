@@ -1,20 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+
 <script src="../static/js/jquery.min.js"></script>
+<script src="../static/js/eams.area.data.js"></script>
+<script src="../static/js/eams.area.js"></script>
+
+<html lang="zh">
+
 <head>
-    <meta charset="UTF-8">
-    <title>login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/jumbotron-narrow.css">
+    <title>自动填报系统</title>
 </head>
 <body>
-<form method="post">
-    <label>
-        account:<input type="text" id="account" required="required"><br>
-        password:<input type="password" id="password" required="required"><br>
-        <input type="button" value="login" onclick="login()">
-    </label>
-</form>
-</body>
-</html>
+<div class="container">
+    <div class="header clearfix" style="margin-bottom: 0;">
+        <nav>
+            <ul class="nav nav-pills pull-right">
+                <li role="presentation"><a href="/">Home</a></li>
+                <li role="presentation" class="active"><a href="/login">修改已登记账号</a></li>
+            </ul>
+        </nav>
+        <h3 class="text-muted">登录</h3>
+    </div>
+
+    <form class="form-signin" method="post">
+        <h2 class="form-signin-heading">Login</h2>
+        <label for="account" class="sr-only">学号</label>
+        <input class="form-control" type="text" id="account" required="required" placeholder="Account" autofocus>
+
+        <label for="password" class="sr-only">密码</label>
+        <input class="form-control" type="password" id="password" required="required" placeholder="Password">
+
+        <input class="btn btn-primary pull-right" type="button" onclick="login()" value="Login"
+               style="margin-top: 10px">
+    </form>
+
+    <div style="margin-bottom: 60px">
+
+    </div>
+
+    <footer class="footer">
+        <div class="contact">
+            <a href="https://github.com/dake0805/AutoYqtb" style="margin-right: 20px">
+                <img src="../static/github.svg" alt="" height="24" width="24">
+                GitHub
+            </a>
+
+            <a href="mailto:dake0805@qq.com">
+                <img src="../static/mail.svg" alt="" height="24" width="30" style="margin-left: 20px">
+                Mail
+            </a>
+        </div>
+    </footer>
+</div>
 
 <script>
     function login() {

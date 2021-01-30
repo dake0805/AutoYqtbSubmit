@@ -3,10 +3,6 @@
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/eams.area.data.js"></script>
 <script src="../static/js/eams.area.js"></script>
-<!--<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.5/build/pure-min.css"-->
-<!--      integrity="sha384-LTIDeidl25h2dPxrB2Ekgc9c7sEC3CWGM6HeFmuDNUjX76Ert4Z4IY714dhZHPLd" crossorigin="anonymous">-->
-
-<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
 
 <html lang="zh">
 
@@ -25,7 +21,7 @@
     <div class="header clearfix" style="margin-bottom: 0;">
         <nav>
             <ul class="nav nav-pills pull-right">
-                <li role="presentation" class="active"><a href="#">Home</a></li>
+                <li role="presentation" class="active"><a href="/">Home</a></li>
                 <li role="presentation"><a href="/login">修改已登记账号</a></li>
             </ul>
         </nav>
@@ -104,7 +100,6 @@
         </div>
     </footer>
 </div>
-
 
 
 </body>
@@ -225,6 +220,8 @@
                     return !this.selected;
                 }).text();
             }
+        } else if (szcsbm == 'on') {
+            szcsbm = '1';
         }
     }
 </script>

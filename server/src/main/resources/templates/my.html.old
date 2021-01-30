@@ -1,113 +1,67 @@
 <!DOCTYPE html>
-
 <script src="../static/js/jquery.min.js"></script>
 <script src="../static/js/eams.area.data.js"></script>
 <script src="../static/js/eams.area.js"></script>
-
-<html lang="zh">
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/jumbotron-narrow.css">
-    <title>自动填报系统</title>
+    <meta charset="UTF-8">
+    <title>Title</title>
 </head>
 <body>
-<div class="container">
-    <div class="header clearfix" style="margin-bottom: 0;">
-        <nav>
-            <ul class="nav nav-pills pull-right">
-                <li role="presentation"><a href="/">Home</a></li>
-                <li role="presentation"><a href="/login">修改已登记账号</a></li>
-            </ul>
-        </nav>
-        <h3 class="text-muted">疫情自动填报</h3>
-    </div>
-
-    <form class="form-signin" method="post">
-        <h2 class="form-signin-heading">设置填报地点</h2>
-        <label for="account" class="sr-only">学号</label>
-        <input class="form-control" type="text" id="account" readonly required="required" placeholder="Account">
-
-        <label for="password" class="sr-only">密码</label>
-        <input class="form-control" type="text" id="password" required="required" placeholder="Password">
-
-        <div class="radio">
-            <label>
-                <input type="radio" name="szcsbm" id="inSchool">
-                在学校
+修改填报信息
+<form method="post">
+    <label>
+        account:<input type="text" id="account" required="required" readonly="readonly"><br>
+        password:<input type="text" id="password" required="required"><br><br>
+        <input type="checkbox" id="inSchool">当前在学校<br><br>
+        下面是不在学校时的地址：<br><br>
+        <div>
+            <label for="x12">
+                <div>
+                    <p>在西安（租住校内房屋或住在校外的学生）</p>
+                </div>
+                <div>
+                    <input type="radio" name="szcsbm" value="2" onclick="changeWz(2)" id="x12">
+                </div>
+            </label>
+            <br>
+            <label for="x13">
+                <div>
+                    <p>在国内（西安市以外的其他国内地区）</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="szcsbm" value="3" onclick="changeWz(3)" id="x13">
+                </div>
             </label>
         </div>
-
-
-        <div class="radio">
-            <label>
-                <input type="radio" name="szcsbm" id="inXian" value="2" onclick="changeWz(2)">
-                在西安（租住校内房屋或住在校外的学生）
-            </label>
+        <div id="qtwz" style="display: none;margin-top: 0px;">
+            <div class="weui-cell">
+                <div class="weui-cell__bd">
+                    <select id="province" onchange="changeSelect(this);">
+                        <option value="">-省-</option>
+                    </select>
+                    <select id="city" onchange="changeSelect(this);">
+                        <option value="" style="color:#999;">-市-</option>
+                    </select>
+                    <select name="hjbm" id="district">
+                        <option value="" style="color:#999;">-区/县-</option>
+                    </select>
+                </div>
+            </div>
         </div>
-
-        <div class="radio">
-            <label for="inNation">
-                <input type="radio" name="szcsbm" id="inNation" value="3" onclick="changeWz(3)">
-                在国内（西安市以外的其他国内地区）
-            </label>
-        </div>
-
-        <div class="form-group" id="qtwz" style="display: none;margin-top: 0;">
-            <select id="province" onchange="changeSelect(this);">
-                <option value="">-省-</option>
-            </select>
-            <select id="city" onchange="changeSelect(this);">
-                <option value="">-市-</option>
-            </select>
-            <select name="hjbm" id="district">
-                <option value="">-区/县-</option>
-            </select>
-        </div>
-        <div class="checkbox">
-            <label for="wantStop">
-                <input type="checkbox" id="wantStop">
-                停用自动填报
-            </label>
-        </div>
-        <input class="btn btn-primary pull-right" type="button" onclick="mySubmit()" value="submit"
-               style="margin-bottom: 10px">
-    </form>
-
-    <div style="margin-bottom: 60px">
-
-    </div>
-
-    <footer class="footer">
-        <div class="contact">
-            <a href="https://github.com/dake0805/AutoYqtb" style="margin-right: 20px">
-                <img src="../static/github.svg" alt="" height="24" width="24">
-                GitHub
-            </a>
-
-            <a href="mailto:dake0805@qq.com">
-                <img src="../static/mail.svg" alt="" height="24" width="30" style="margin-left: 20px">
-                Mail
-            </a>
-        </div>
-        <div class="copyright">
-            <p style="margin:auto ; line-height: 36px;text-align: left ">
-                <span><b>免责声明</b></span>
-                <br>
-                此项目仅供学习，使用此程序表示已了解自身健康状况。<br>
-                此程序仅可用于替代正常健康情况的汇报工作。如有非正常健康状况，请停止使用自动填报，并按相关规定汇报以及及时就医。<br>
-                注册此系统将收集翱翔门户的相关账号信息。本系统保证相关账号信息仅将用于自动填表时进行翱翔门户登录，不作他用。
-            </p>
-        </div>
-    </footer>
-</div>
+        <br><br>
+        <input type="checkbox" id="wantStop">停用自动填报<br>
+        <input type="button" onclick="mySubmit()" value="submit">
+        <br>
+    </label>
+    <br>
+</form>
 
 
+<a href="https://github.com/dake0805/AutoYqtb">github</a>
+<br>有疑问？
+<a href="mailto:dake0805@qq.com">dake0805@qq.com</a><br>
+<br>仅供学习<br>
 </body>
 </html>
 
@@ -258,9 +212,6 @@
                     return !this.selected;
                 }).text();
             }
-        }
-        else if (szcsbm == 'on') {
-            szcsbm = '1';
         }
     }
 </script>
