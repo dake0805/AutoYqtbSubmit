@@ -4,7 +4,8 @@ import time
 import pymysql
 
 from login import *
-from yqtb import yqtb
+from yqtb import yqtb_inSchool
+from yqtb import yqtb_out
 
 
 def run():
@@ -28,17 +29,29 @@ def run():
         if user is None:
             continue
 
-        getResult = user.get("http://yqtb.nwpu.edu.cn/wx/ry/jbxx_v.jsp")
-        cellphone = (etree.HTML(getResult.content).xpath('//label[text()="手机号码："]/../../span/text()')[0])
-        xueyuan = str(etree.HTML(getResult.content).xpath('//label[text()="学院/大类："]/../../span/text()')[0])
-        name = str(etree.HTML(getResult.content).xpath('//label[text()="姓名："]/../../span/text()')[0])
-        fxzt1 = re.findall(r"fxzt:'\d{1,}'", re.findall(r"var paramData.*fxzt:'\d{0,}'",
-                                                        user.get(
-                                                            'http://yqtb.nwpu.edu.cn/wx/ry/jrsb.jsp').text,
+        # 基本信息
+        jbxx_html = user.get("http://yqtb.nwpu.edu.cn/wx/ry/jbxx_v.jsp")
+        cellphone = (etree.HTML(jbxx_html.content).xpath('//label[text()="手机号码："]/../../span/text()')[0])
+        xueyuan = str(etree.HTML(jbxx_html.content).xpath('//label[text()="学院/大类："]/../../span/text()')[0])
+        name = str(etree.HTML(jbxx_html.content).xpath('//label[text()="姓名："]/../../span/text()')[0])
+
+        jrsb_html = user.get(
+            'http://yqtb.nwpu.edu.cn/wx/ry/jrsb.jsp')
+
+        # 返校状态现在是 bdzt (报道状态？)
+        fxzt1 = re.findall(r"bdzt:'\d{1,}'", re.findall(r"var paramData.*bdzt:'\d{0,}'",
+                                                        jrsb_html.text,
                                                         flags=0)[0])[0]
         fxzt = re.findall(r"\d{1,}", fxzt1)[0]
 
-        yqtb(user, account, location, zip, name, xueyuan, cellphone, inschool, fxzt)
+        save_mode = (etree.HTML(jrsb_html.content).xpath('//a[text()="提交填报信息"]/@href')[0])
+
+        # 已返校情况
+        if "go_subfx();" in save_mode:
+            yqtb_inSchool(user, account, location, zip, name, xueyuan, cellphone, inschool, fxzt)
+
+        elif "go_sub()" in save_mode:
+            yqtb_out(user, account, location, zip, name, xueyuan, cellphone, inschool, fxzt)
 
         time.sleep(30)
     else:
